@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Indicadores de Desempenho | Trabalho Acadêmico</title>
+  <style>
+    :root {
+      --azul: #24527a;
+      --azul-claro: #e8f2fb;
+      --verde: #2e8b57;
+      --amarelo: #f4b400;
+      --vermelho: #d9534f;
+      --cinza: #f5f7fa;
+      --texto: #253040;
+      --suave: #667085;
+      --borda: #d9e2ec;
+      --branco: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--texto);
+      background: #edf3f8;
+    }
+
+    .page {
+      max-width: 1120px;
+      margin: 24px auto;
+      background: var(--branco);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 15px 35px rgba(36, 82, 122, 0.15);
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--azul), #163957);
+      color: white;
+      padding: 34px;
+      text-align: center;
+    }
+
+    header .tag {
+      display: inline-block;
+      background: rgba(255,255,255,.16);
+      border: 1px solid rgba(255,255,255,.25);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 16px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1.1;
+    }
+
+    header p {
+      max-width: 760px;
+      margin: 14px auto 0;
+      opacity: .9;
+      line-height: 1.5;
+      font-size: 16px;
+    }
+
+    .content {
+      padding: 28px;
+    }
+
+    .section {
+      margin-bottom: 26px;
+    }
+
+    .title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .num {
+      min-width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: var(--azul-claro);
+      color: var(--azul);
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+    }
+
+    h2 {
+      margin: 0;
+      color: #163957;
+      font-size: 23px;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid var(--borda);
+      border-radius: 20px;
+      padding: 22px;
+      box-shadow: 0 8px 18px rgba(16, 24, 40, 0.05);
+    }
+
+    .soft {
+      background: var(--cinza);
+    }
+
+    p {
+      line-height: 1.58;
+      margin: 0;
+      font-size: 16px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .mini {
+      background: var(--cinza);
+      border: 1px solid var(--borda);
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    .mini strong {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--azul);
+      font-size: 16px;
+    }
+
+    .mini span {
+      color: #475467;
+      line-height: 1.45;
+      font-size: 15px;
+    }
+
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+
+    li {
+      padding: 12px 14px;
+      background: var(--cinza);
+      border-radius: 14px;
+      border: 1px solid var(--borda);
+      line-height: 1.45;
+    }
+
+    li::before {
+      content: "✓";
+      color: var(--verde);
+      font-weight: 900;
+      margin-right: 8px;
+    }
+
+    .indicator-box {
+      background: linear-gradient(180deg, #f8fbff, #eef6fc);
+      border: 1px solid #cfe0ef;
+      border-radius: 24px;
+      padding: 24px;
+    }
+
+    .formula {
+      background: white;
+      border: 2px solid var(--azul-claro);
+      border-radius: 20px;
+      padding: 22px;
+      text-align: center;
+      margin: 18px 0;
+      font-weight: 900;
+      color: #163957;
+      font-size: 18px;
+    }
+
+    .fraction {
+      display: inline-grid;
+      min-width: 260px;
+      vertical-align: middle;
+      margin: 0 8px;
+      gap: 4px;
+    }
+
+    .fraction .top {
+      border-bottom: 2px solid #163957;
+      padding-bottom: 5px;
+    }
+
+    .fraction .bottom {
+      padding-top: 2px;
+    }
+
+    .calculator {
+      background: #163957;
+      color: white;
+      border-radius: 22px;
+      padding: 22px;
+    }
+
+    .calculator h3 {
+      margin: 0 0 8px;
+      font-size: 22px;
+    }
+
+    .calculator p {
+      color: rgba(255,255,255,.86);
+      font-size: 15px;
+      margin-bottom: 16px;
+    }
+
+    label {
+      display: block;
+      font-weight: 800;
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    input {
+      width: 100%;
+      border: none;
+      border-radius: 13px;
+      padding: 12px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    .fields {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .result {
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 18px;
+      padding: 18px;
+      text-align: center;
+    }
+
+    .result small {
+      display: block;
+      opacity: .85;
+      font-weight: bold;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: .4px;
+    }
+
+    .result strong {
+      display: block;
+      font-size: 44px;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .badge {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-weight: 900;
+      font-size: 13px;
+      background: white;
+      color: var(--azul);
+      margin-top: 8px;
+    }
+
+    .reading {
+      margin-top: 16px;
+      background: white;
+      color: var(--texto);
+      border-radius: 18px;
+      padding: 18px;
+      line-height: 1.55;
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 16px;
+      border: 1px solid var(--borda);
+      background: white;
+    }
+
+    .table th,
+    .table td {
+      padding: 13px;
+      border-bottom: 1px solid #edf2f7;
+      text-align: left;
+      font-size: 14px;
+      vertical-align: top;
+    }
+
+    .table th {
+      background: var(--azul-claro);
+      color: #163957;
+      text-transform: uppercase;
+      font-size: 12px;
+    }
+
+    .table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .status {
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-weight: 900;
+      font-size: 12px;
+      display: inline-block;
+    }
+
+    .red { background: #fdeaea; color: #a52828; }
+    .yellow { background: #fff4cf; color: #8a6500; }
+    .green { background: #e3f6ea; color: #216e41; }
+
+    .footer {
+      background: #f8fafc;
+      border-top: 1px solid var(--borda);
+      padding: 18px 28px;
+      text-align: center;
+      color: var(--suave);
+      font-size: 13px;
+    }
+
+    .actions {
+      position: sticky;
+      bottom: 16px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    button {
+      border: none;
+      border-radius: 999px;
+      background: var(--azul);
+      color: white;
+      padding: 12px 18px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(36, 82, 122, .20);
+    }
+
+    button.secondary {
+      background: white;
+      color: var(--azul);
+      border: 1px solid var(--borda);
+    }
+
+    @media (max-width: 850px) {
+      .page {
+        margin: 0;
+        border-radius: 0;
+      }
+
+      header {
+        padding: 28px 20px;
+      }
+
+      header h1 {
+        font-size: 28px;
+      }
+
+      .content {
+        padding: 20px;
+      }
+
+      .grid-2, .grid-3, .fields {
+        grid-template-columns: 1fr;
+      }
+
+      .formula {
+        font-size: 15px;
+      }
+
+      .fraction {
+        min-width: 200px;
+      }
+    }
+
+    @media print {
+      body {
+        background: white;
+      }
+
+      .page {
+        margin: 0;
+        box-shadow: none;
+        border-radius: 0;
+      }
+
+      .actions {
+        display: none;
+      }
+
+      .section {
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="tag">Trabalho Acadêmico • Gestão de Indicadores</div>
+      <h1>Indicadores de Desempenho</h1>
+      <p>
+        Apresentação simples e visual sobre o que são indicadores, por que eles são importantes
+        e como aplicar um indicador de pessoas na prática.
+      </p>
+    </header>
+
+    <div class="content">
+      <section class="section">
+        <div class="title">
+          <div class="num">1</div>
+          <h2>O que é um indicador de desempenho?</h2>
+        </div>
+        <div class="card">
+          <p>
+            É uma ferramenta que usa valores numéricos para medir como uma empresa, área ou processo
+            está se saindo ao longo do tempo. O indicador fornece informações qualitativas e quantitativas
+            que ajudam a analisar a eficiência, a eficácia e os resultados de serviços, produtos ou processos.
+          </p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="title">
+          <div class="num">2</div>
+          <h2>Por que acompanhar bons indicadores?</h2>
+        </div>
+        <div class="card soft">
+          <p>
+            Sem indicadores, a empresa fica sem clareza sobre seus resultados. Eles ajudam a entender
+            o que está acontecendo, avaliar se as mudanças funcionaram, corrigir falhas, controlar processos,
+            acompanhar metas, definir prioridades e melhorar a competitividade da empresa.
+          </p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="title">
+          <div class="num">3</div>
+          <h2>Critérios para um bom indicador</h2>
+        </div>
+        <div class="grid grid-2">
+          <ul>
+            <li>Estável, sem mudar o tempo todo.</li>
+            <li>Alinhado aos objetivos da empresa.</li>
+            <li>Estratégico e conectado ao negócio.</li>
+            <li>Rastreável, permitindo acompanhar a evolução.</li>
+          </ul>
+          <ul>
+            <li>Adequado à realidade da empresa.</li>
+            <li>Representativo e relevante para a gestão.</li>
+            <li>Confiável, baseado em dados sólidos.</li>
+            <li>Simples, disponível e fácil de entender.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="title">
+          <div class="num">4</div>
+          <h2>Tipos de indicadores</h2>
+        </div>
+        <div class="grid grid-4">
+          <div class="mini">
+            <strong>Estratégicos</strong>
+            <span>Mostram se a empresa está avançando em seus objetivos principais.</span>
+          </div>
+          <div class="mini">
+            <strong>Qualidade</strong>
+            <span>Avaliam erros, retrabalho, satisfação e melhoria dos processos.</span>
+          </div>
+          <div class="mini">
+            <strong>Capacidade</strong>
+            <span>Medem o quanto uma equipe ou processo consegue entregar.</span>
+          </div>
+          <div class="mini">
+            <strong>Produtividade</strong>
+            <span>Relacionam recursos utilizados com os resultados alcançados.</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="title">
+          <div class="num">5</div>
+          <h2>Book do Indicador de Pessoas</h2>
+        </div>
+
+        <div class="indicator-box">
+          <div class="grid grid-2">
+            <div>
+              <h2 style="margin-bottom:12px;">Índice de Promoção Interna</h2>
+              <p>
+                O Índice de Promoção Interna mede a proporção de vagas preenchidas por talentos da própria
+                empresa em vez de contratações externas. Esse indicador mostra se a organização valoriza
+                seus colaboradores, investe em desenvolvimento e cria oportunidades de crescimento.
+              </p>
+
+              <div class="formula">
+                Taxa =
+                <span class="fraction">
+                  <span class="top">Número de promoções internas</span>
+                  <span class="bottom">Número total de vagas preenchidas</span>
+                </span>
+                × 100
+              </div>
+
+              <div class="grid grid-2">
+                <div class="mini">
+                  <strong>Objetivo</strong>
+                  <span>Avaliar o aproveitamento dos talentos internos da empresa.</span>
+                </div>
+                <div class="mini">
+                  <strong>Importância</strong>
+                  <span>Ajuda na retenção, no engajamento e no fortalecimento do plano de carreira.</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="calculator">
+              <h3>Cálculo na prática</h3>
+              <p>Preencha os campos para simular o funcionamento do indicador.</p>
+
+              <div class="fields">
+                <div>
+                  <label>Promoções internas</label>
+                  <input id="promocoes" type="number" min="0" value="8" oninput="calcular()" />
+                </div>
+                <div>
+                  <label>Total de vagas</label>
+                  <input id="vagas" type="number" min="0" value="20" oninput="calcular()" />
+                </div>
+                <div>
+                  <label>Meta (%)</label>
+                  <input id="meta" type="number" min="0" max="100" value="30" oninput="calcular()" />
+                </div>
+              </div>
+
+              <div class="result">
+                <small>Resultado do indicador</small>
+                <strong id="resultado">40%</strong>
+                <span class="badge" id="status">Dentro da meta</span>
+              </div>
+
+              <div class="reading" id="leitura">
+                Das 20 vagas preenchidas, 8 foram ocupadas por colaboradores promovidos internamente.
+                O índice de promoção interna foi de 40%.
+              </div>
+            </div>
+          </div>
+
+          <div class="section" style="margin-bottom:0;">
+            <div class="title">
+              <div class="num">✓</div>
+              <h2>Como interpretar o resultado?</h2>
+            </div>
+
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Resultado</th>
+                  <th>Status</th>
+                  <th>Interpretação</th>
+                  <th>Ação sugerida</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Abaixo de 20%</td>
+                  <td><span class="status red">Crítico</span></td>
+                  <td>Baixo aproveitamento dos talentos internos.</td>
+                  <td>Mapear competências e criar ações de desenvolvimento.</td>
+                </tr>
+                <tr>
+                  <td>De 20% a 29,9%</td>
+                  <td><span class="status yellow">Atenção</span></td>
+                  <td>Existe promoção interna, mas ainda abaixo do ideal.</td>
+                  <td>Divulgar vagas internamente e preparar sucessores.</td>
+                </tr>
+                <tr>
+                  <td>30% ou mais</td>
+                  <td><span class="status green">Adequado</span></td>
+                  <td>Bom aproveitamento dos talentos da empresa.</td>
+                  <td>Manter plano de carreira e acompanhar por período.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="section" style="margin-bottom:0;">
+            <div class="grid grid-3">
+              <div class="mini">
+                <strong>Exemplo</strong>
+                <span>Se houve 8 promoções internas em 20 vagas, o resultado é 40%.</span>
+              </div>
+              <div class="mini">
+                <strong>Meta sugerida</strong>
+                <span>Alcançar pelo menos 30% de preenchimento interno em até 6 meses.</span>
+              </div>
+              <div class="mini">
+                <strong>Conclusão</strong>
+                <span>Quanto maior o índice, maior o aproveitamento dos talentos internos.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="title">
+          <div class="num">6</div>
+          <h2>Resumo para apresentação</h2>
+        </div>
+        <div class="card">
+          <p id="resumo">
+            O Índice de Promoção Interna é um indicador de pessoas importante porque mostra se a empresa
+            está valorizando seus próprios colaboradores. No exemplo utilizado, 8 das 20 vagas foram preenchidas
+            internamente, resultando em uma taxa de 40%. Esse resultado está acima da meta sugerida de 30%,
+            indicando uma boa prática de desenvolvimento e retenção de talentos.
+          </p>
+        </div>
+      </section>
+
+      <div class="actions">
+        <button onclick="window.print()">Imprimir ou salvar em PDF</button>
+        <button class="secondary" onclick="calcular()">Atualizar cálculo</button>
+      </div>
+    </div>
+
+    <div class="footer">
+      Trabalho acadêmico sobre indicadores de desempenho e gestão de pessoas.
+    </div>
+  </div>
+
+  <script>
+    function pct(valor) {
+      if (!isFinite(valor)) return "0%";
+      return valor.toLocaleString("pt-BR", {
+        minimumFractionDigits: valor % 1 === 0 ? 0 : 1,
+        maximumFractionDigits: 1
+      }) + "%";
+    }
+
+    function calcular() {
+      const promocoes = Number(document.getElementById("promocoes").value || 0);
+      const vagas = Number(document.getElementById("vagas").value || 0);
+      const meta = Number(document.getElementById("meta").value || 0);
+
+      let taxa = 0;
+      if (vagas > 0) {
+        taxa = (promocoes / vagas) * 100;
+      }
+
+      const resultado = document.getElementById("resultado");
+      const status = document.getElementById("status");
+      const leitura = document.getElementById("leitura");
+      const resumo = document.getElementById("resumo");
+
+      resultado.textContent = pct(taxa);
+
+      let statusTexto = "";
+      let bg = "";
+      let color = "";
+      let interpretacao = "";
+
+      if (vagas === 0) {
+        statusTexto = "Sem dados";
+        bg = "#e5e7eb";
+        color = "#374151";
+        interpretacao = "Informe o total de vagas preenchidas para calcular o indicador.";
+      } else if (taxa >= meta) {
+        statusTexto = "Dentro da meta";
+        bg = "#e3f6ea";
+        color = "#216e41";
+        interpretacao = "Esse resultado está dentro da meta e indica bom aproveitamento dos talentos internos.";
+      } else if (taxa >= 20) {
+        statusTexto = "Atenção";
+        bg = "#fff4cf";
+        color = "#8a6500";
+        interpretacao = "Esse resultado exige atenção, pois há promoção interna, mas ainda abaixo da meta definida.";
+      } else {
+        statusTexto = "Crítico";
+        bg = "#fdeaea";
+        color = "#a52828";
+        interpretacao = "Esse resultado é baixo e pode indicar pouca valorização ou preparação dos talentos internos.";
+      }
+
+      status.textContent = statusTexto;
+      status.style.background = bg;
+      status.style.color = color;
+
+      leitura.textContent =
+        "Das " + vagas + " vagas preenchidas, " + promocoes +
+        " foram ocupadas por colaboradores promovidos internamente. O índice de promoção interna foi de " +
+        pct(taxa) + ". " + interpretacao;
+
+      resumo.textContent =
+        "O Índice de Promoção Interna é um indicador de pessoas importante porque mostra se a empresa está valorizando seus próprios colaboradores. No exemplo utilizado, " +
+        promocoes + " das " + vagas + " vagas foram preenchidas internamente, resultando em uma taxa de " +
+        pct(taxa) + ". " + interpretacao;
+    }
+
+    calcular();
+  </script>
+</body>
+</html>
